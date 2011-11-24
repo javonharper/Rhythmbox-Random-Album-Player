@@ -1,5 +1,10 @@
 To install, move the 'Rhythmbox-Random-Album-Player' to
-
 $HOME$/.gnome2/rhythmbox/plugins
+
+if that directory does not exist, run the following:
+mkdir -p $HOME/.gnome2/rhythmbox/plugins
+mv Rhythmbox-Random-Album-Player $HOME/.gnome2/rhythmbox/plugins
+
+Then in Rhythmbox go to Edit -> plugins and enable the 'Random Album' Plugin
 
 Enjoy!
