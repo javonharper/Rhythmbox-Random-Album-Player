@@ -1,9 +1,9 @@
 [Plugin]
 Loader=python
-Module=randomalbumplayer
+Module=RhythmboxRandomAlbumPlayer
 IAge=2
 Name=Random Album Player
-Description=Plays a random album from your library
+Description=Plays a random album from your library.
 Authors=Javon Harper <javon.d.harper@gmail.com>
 Copyright=Copyright © 2012 Javon Harper
 Website=http://javonharper.com
