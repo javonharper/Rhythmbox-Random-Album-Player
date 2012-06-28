@@ -1,6 +1,6 @@
 '''
-Plugin for Rythmbox that random plays songs sorted by album, track-number randomly
-Copyright (C) 2011  Javon Harper <javharper@gmail.com>
+Plugin for Rhythmbox that random plays songs sorted by album, track-number randomly
+Copyright (C) 2012  Javon Harper <javon.d.harper@gmail.com>
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 '''
+
 import gtk
 import rb
 import rhythmdb
