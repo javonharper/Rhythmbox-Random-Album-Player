@@ -58,4 +58,57 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     ui_manager.remove_ui(self.ui_id)
 
   def random_album(self, event, shell):
-    print 'Playing Random Album'
+    # Get URIs of all the songs in the queue and remove them
+    play_queue = shell.props.queue_source
+    for row in play_queue.props.query_model:
+      entry = row[0]
+      play_queue.remove_entry(entry)
+  
+    # Queue a random album
+    self.queue_random_album()
+    
+    # #start the music!(well, first stop it, but it'll start up again.)
+    # print 'Playing Album'
+    # player = shell.props.shell_player
+    # player.stop()
+    # player.set_playing_source(shell.props.queue_source)
+    # player.playpause()
+      
+    # #scroll to song playing
+    # shell.props.shell_player.play()
+    # library = shell.props.library_source
+    # content_viewer = library.get_entry_view()
+
+
+  def queue_random_album(self):
+    # Find all of the albums in the user's library
+    shell = self.object
+    library = shell.props.library_source
+    albums = []
+    for row in library.props.query_model:
+      entry = row[0]
+      album_name = entry.get_string(RB.RhythmDBPropType.ALBUM)
+      if (album_name not in albums):
+        albums.append(album_name)
+    print albums
+  
+  # #choose a random album
+  # selected_album = albums[random.randint(0, len(albums) - 1)]
+  # print 'queuing ' + selected_album
+  
+  # #find all the songs from that album
+  # song_info = []
+  # for row in library.props.query_model:
+  #   entry = row[0]
+  #   album = self.shell.props.db.entry_get(entry, rhythmdb.PROP_ALBUM)
+  #   if (album == selected_album):
+  #     song_uri = entry.get_playback_uri()
+  #     track_num = self.shell.props.db.entry_get(entry, rhythmdb.PROP_TRACK_NUMBER)
+  #     song_info.append((song_uri, track_num))
+  
+  # #sort the songs
+  # song_info = sorted(song_info, key=lambda song_info: song_info[1])
+      
+  # #add the songs to the play queue      
+  # for info in song_info:
+  #   self.shell.add_to_queue(info[0])
