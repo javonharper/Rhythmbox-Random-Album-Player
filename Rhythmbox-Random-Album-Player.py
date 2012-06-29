@@ -41,18 +41,21 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     super(RandomAlbumPlugin, self).__init__()
 
   def do_activate(self):
-    print "Activating Random Album Plugin"
     shell = self.object
+    print "Activating Random Album Plugin"
     action = Gtk.Action ('RandomAlbum', _('Random Album'), _('Play a Random Album'), "")
     action.connect ('activate', self.random_album, shell)
     action_group = Gtk.ActionGroup('RandomAlbumActionGroup')
     action_group.add_action(action)
     ui_manager = shell.props.ui_manager
     ui_manager.insert_action_group(action_group)
-    ui_manager.add_ui_from_string(random_album_menu_item)
+    self.ui_id = ui_manager.add_ui_from_string(random_album_menu_item)
 
   def do_deactivate(self):
     print 'Deactivating Random Album Plugin'
+    shell = self.object
+    ui_manager = shell.props.ui_manager
+    ui_manager.remove_ui(self.ui_id)
 
   def random_album(self, event, shell):
     print 'Playing Random Album'
