@@ -1,8 +1,13 @@
-Do you prefer listening to whole albums but not sure which one you're in the mood for?
-
+Do you prefer listening to whole albums but aren't sure which one you're in the mood for?
 This plugin for Rhythmbox queues a random album and plays it immediately.
 
 Installing
 
 Move the 'Rhythmbox-Random-Album-Player' directory to
 ~/.local/share/rhythmbox/plugins
+
+Usage
+
+From application menu, click 'Control' -> 'Random Album' to start up a random album.
+
+Enjoy!
