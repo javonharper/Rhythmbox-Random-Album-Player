@@ -37,6 +37,7 @@ random_album_menu_item = '''
 '''
 
 class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
+  __gtype_name__ = 'RandomAlbumPlugin'
   object = GObject.property(type=GObject.Object)
 
   def __init__(self):
@@ -48,6 +49,8 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     action = Gtk.Action ('RandomAlbum', _('Random Album'), _('Play a Random Album'), "")
     action.connect ('activate', self.random_album, shell)
     action_group = Gtk.ActionGroup('RandomAlbumActionGroup')
+    action_group.add_action_with_accel (action, "<alt>R")
+
     action_group.add_action(action)
     ui_manager = shell.props.ui_manager
     ui_manager.insert_action_group(action_group)
