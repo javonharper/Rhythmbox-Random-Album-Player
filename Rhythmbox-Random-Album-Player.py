@@ -50,8 +50,7 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     action.connect ('activate', self.random_album, shell)
     action_group = Gtk.ActionGroup('RandomAlbumActionGroup')
     action_group.add_action_with_accel (action, "<alt>R")
-
-    #action_group.add_action(action)
+    
     ui_manager = shell.props.ui_manager
     ui_manager.insert_action_group(action_group)
     self.ui_id = ui_manager.add_ui_from_string(random_album_menu_item)
