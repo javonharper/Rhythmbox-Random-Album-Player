@@ -91,7 +91,16 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
       albums[album_name] = album_struct
   
     # Choose a random album
-    selected_album = albums.keys()[random.randint(0, len(albums) - 1)]
+    album_names = albums.keys()
+    num_albums = len(albums)
+    selected_album = album_names[random.randint(0, num_albums - 1)]
+    # optionally only queue album over a certain length
+    # but only try a few times, don't want to get bogged down
+    # trying to find one (filtering up front may be better?)
+    #tries = 0
+    #while(albums[selected_album]["count"] < 5 and tries < 10):
+    #  selected_album = album_names[random.randint(0, num_albums - 1)]
+    #  tries = tries + 1
     print 'Queuing ' + selected_album+ '.'
   
     # Find all the songs from that album
