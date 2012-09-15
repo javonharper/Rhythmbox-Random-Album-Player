@@ -82,9 +82,12 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     shell = self.object
     library = shell.props.library_source
     albums = {}
+    #ignore_albums = ["Single", "Unknown"]
     for row in library.props.query_model:
       entry = row[0]
       album_name = entry.get_string(RB.RhythmDBPropType.ALBUM)
+      #if album_name in ignore_albums:
+      #  continue
       album_struct = albums.get(album_name, { "songs" : [], "count": 0 })
       album_struct["count"] = album_struct["count"] + 1
       album_struct["songs"].append(entry)
