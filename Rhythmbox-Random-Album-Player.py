@@ -18,6 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 '''
 
 import random
+import time
 
 from gi.repository import GObject
 from gi.repository import Peas
@@ -81,24 +82,22 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
   def queue_random_album(self):
     shell = self.object
     library = shell.props.library_source
-    albums = []
+    start = time.time()
+    albums = {}
     for row in library.props.query_model:
       entry = row[0]
       album_name = entry.get_string(RB.RhythmDBPropType.ALBUM)
-      if (album_name not in albums):
-        albums.append(album_name)
+      album_struct = albums.get(album_name, { "songs" : [], "count": 0 })
+      album_struct["count"] = album_struct["count"] + 1
+      album_struct["songs"].append(entry)
+      albums[album_name] = album_struct
   
     # Choose a random album
-    selected_album = albums[random.randint(0, len(albums) - 1)]
+    selected_album = albums.keys()[random.randint(0, len(albums) - 1)]
     print 'Queuing ' + selected_album+ '.'
   
     # Find all the songs from that album
-    songs = []
-    for row in library.props.query_model:
-      entry = row[0]
-      album = entry.get_string(RB.RhythmDBPropType.ALBUM)
-      if (album == selected_album):
-        songs.append(entry)
+    songs = albums[selected_album]["songs"]
   
     # Sort the songs
     songs = sorted(songs, key=lambda song: song.get_ulong(RB.RhythmDBPropType.TRACK_NUMBER))
@@ -106,3 +105,5 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     # Add the songs to the play queue      
     for song in songs:
       shell.props.queue_source.add_entry(song, -1)
+    end = time.time()
+    print str(end - start)
