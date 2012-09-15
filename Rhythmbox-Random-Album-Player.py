@@ -18,7 +18,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 '''
 
 import random
-import time
 
 from gi.repository import GObject
 from gi.repository import Peas
@@ -82,7 +81,6 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
   def queue_random_album(self):
     shell = self.object
     library = shell.props.library_source
-    start = time.time()
     albums = {}
     for row in library.props.query_model:
       entry = row[0]
@@ -105,5 +103,3 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     # Add the songs to the play queue      
     for song in songs:
       shell.props.queue_source.add_entry(song, -1)
-    end = time.time()
-    print str(end - start)
