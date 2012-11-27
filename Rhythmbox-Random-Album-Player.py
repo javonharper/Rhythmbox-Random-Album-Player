@@ -1,5 +1,5 @@
 '''
-Plugin for Rhythmbox that random plays songs sorted by album, track-number randomly
+Plugin for Rhythmbox that random plays songs sorted by album (in correct disc order), track-number randomly
 Copyright (C) 2012  Javon Harper <javon.d.harper@gmail.com>
 
 This program is free software; you can redistribute it and/or
@@ -109,8 +109,10 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     # Find all the songs from that album
     songs = albums[selected_album]["songs"]
   
-    # Sort the songs
+    # Sort the songs into track order
     songs = sorted(songs, key=lambda song: song.get_ulong(RB.RhythmDBPropType.TRACK_NUMBER))
+    # now re-Sort into disc order in case we have more than one disc to this album
+    songs = sorted(songs, key=lambda song: song.get_ulong(RB.RhythmDBPropType.DISC_NUMBER))
         
     # Add the songs to the play queue      
     for song in songs:
