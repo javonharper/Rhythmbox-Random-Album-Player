@@ -109,9 +109,8 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     # Find all the songs from that album
     songs = albums[selected_album]["songs"]
   
-    # Sort the songs into track order
+    # Sort the songs by disc number, track number
     songs = sorted(songs, key=lambda song: song.get_ulong(RB.RhythmDBPropType.TRACK_NUMBER))
-    # now re-Sort into disc order in case we have more than one disc to this album
     songs = sorted(songs, key=lambda song: song.get_ulong(RB.RhythmDBPropType.DISC_NUMBER))
         
     # Add the songs to the play queue      
