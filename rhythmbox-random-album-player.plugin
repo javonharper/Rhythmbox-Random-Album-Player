@@ -5,5 +5,6 @@ IAge=2
 Name=Random Album Player
 Description=Plays a random album from your library.
 Authors=Javon Harper <javon.d.harper@gmail.com>
-Copyright=Copyright © 2012 Javon Harper
+Copyright=Copyright © 2013 Javon Harper
+Depends=rb
 Website=http://github.com/javonharper/Rhythmbox-Random-Album-Player
