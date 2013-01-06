@@ -22,12 +22,17 @@ Configuration options
 ===
 
 Number of albums to play:
+
 If you'd like to play more than one
+
 Default: 1
 
 Ignored albums:
+
 A comma-separated list of albums that you want the plugin to ignore.
+
 Default: Unknown, Unknown Album, Single
+
 
 Enjoy!
 ===
