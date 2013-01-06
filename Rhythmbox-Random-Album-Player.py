@@ -23,6 +23,7 @@ from gi.repository import GObject
 from gi.repository import Peas
 from gi.repository import RB
 from gi.repository import Gtk
+from gi.repository import Gio
 
 from RandomAlbumConfigDialog import ConfigDialog
 
@@ -54,6 +55,8 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     ui_manager = shell.props.ui_manager
     ui_manager.insert_action_group(action_group)
     self.ui_id = ui_manager.add_ui_from_string(random_album_menu_item)
+    
+    self.settings = Gio.Settings('com.javonharper.rhythmbox.plugins.randomalbumplayer')
 
   def do_deactivate(self):
     print 'Deactivating Random Album Plugin'
@@ -69,7 +72,8 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
       play_queue.remove_entry(entry)
   
     # Queue a random album
-    self.queue_random_album()
+    for _ in range(self.settings['albums-to-play']):
+        self.queue_random_album()
     
     # Start the music!(well, first stop it, but it'll start up again.)
     print 'Playing Album'
@@ -82,12 +86,16 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     shell = self.object
     library = shell.props.library_source
     albums = {}
-    #ignore_albums = ["Single", "Unknown"]
+    
+    ignore_albums = [ item.strip() for item in self.settings['ignored-albums'].split(',') ]
+
     for row in library.props.query_model:
       entry = row[0]
       album_name = entry.get_string(RB.RhythmDBPropType.ALBUM)
-      #if album_name in ignore_albums:
-      #  continue
+      
+      if album_name in ignore_albums:
+        continue
+        
       album_struct = albums.get(album_name, { "songs" : [], "count": 0 })
       album_struct["count"] = album_struct["count"] + 1
       album_struct["songs"].append(entry)
@@ -97,13 +105,7 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     album_names = albums.keys()
     num_albums = len(albums)
     selected_album = album_names[random.randint(0, num_albums - 1)]
-    # optionally only queue album over a certain length
-    # but only try a few times, don't want to get bogged down
-    # trying to find one (filtering up front may be better?)
-    #tries = 0
-    #while(albums[selected_album]["count"] < 5 and tries < 10):
-    #  selected_album = album_names[random.randint(0, num_albums - 1)]
-    #  tries = tries + 1
+
     print 'Queuing ' + selected_album+ '.'
   
     # Find all the songs from that album
