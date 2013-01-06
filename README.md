@@ -21,13 +21,13 @@ You can also use the shortcut key Alt+R to start.
 Configuration options
 ===
 
-*Number of albums to play*
+**Number of albums to play**
 
 If you'd like to play more than one
 
 Default: 1
 
-*Ignored albums*
+**Ignored albums**
 
 A comma-separated list of albums that you want the plugin to ignore.
 
