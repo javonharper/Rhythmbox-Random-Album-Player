@@ -1,8 +1,6 @@
-Play an album at random
-=====================
-
 Do you prefer listening to whole albums but aren't sure which one you're in the mood for?
-This plugin for Rhythmbox queues a random album and plays it immediately.
+===
+**This plugin for Rhythmbox queues a random album and plays it immediately.**
 
 Installing
 ===
