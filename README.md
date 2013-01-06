@@ -23,7 +23,7 @@ Configuration options
 
 **Number of albums to play**
 
-If you'd like to play more than one
+If you'd like to play more than one album.
 
 Default: 1
 
