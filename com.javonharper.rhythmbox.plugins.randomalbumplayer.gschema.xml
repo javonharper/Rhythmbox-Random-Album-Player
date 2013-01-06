@@ -1,0 +1,14 @@
+<schemalist>
+    <schema id="com.javonharper.rhythmbox.plugins.randomalbumplayer" path="/com/javonharper/rhythmbox/plugins/randomalbumplayer/">
+    <key name="albums-to-play" type="n">
+      <default>1</default>
+      <summary>Albums To Play</summary>
+      <description>The number that should be played.</description>
+    </key>
+    <key name="ignored-albums" type="s">
+      <default>'Unknown, Unknown Album, Single'</default>
+      <summary>Albums To Ignore</summary>
+      <description>List of album names that should be ignored</description>
+    </key>
+  </schema>
+</schemalist>
