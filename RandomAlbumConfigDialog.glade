@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <object class="GtkBox" id="box">
+  <object class="GtkAdjustment" id="adjustment1">
+    <property name="upper">100.01999999977649</property>
+    <property name="value">1</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkBox" id="dialog">
     <property name="width_request">400</property>
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -23,6 +29,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
+            <property name="padding">10</property>
             <property name="position">0</property>
           </packing>
         </child>
@@ -32,8 +39,11 @@
             <property name="can_focus">True</property>
             <property name="max_length">1000</property>
             <property name="invisible_char">•</property>
+            <property name="adjustment">adjustment1</property>
             <property name="climb_rate">1</property>
+            <property name="snap_to_ticks">True</property>
             <property name="numeric">True</property>
+            <property name="update_policy">if-valid</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -60,10 +70,16 @@
             <property name="can_focus">False</property>
             <property name="xalign">0</property>
             <property name="label" translatable="yes">(example: Unknown Album, Single)</property>
+            <attributes>
+              <attribute name="weight" value="light"/>
+              <attribute name="size" value="-900"/>
+              <attribute name="absolute-size" value="-1000"/>
+            </attributes>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
+            <property name="padding">5</property>
             <property name="position">-1</property>
           </packing>
         </child>
@@ -72,11 +88,12 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="xalign">0</property>
-            <property name="label" translatable="yes">Album titles to ignore (comma-seperated)</property>
+            <property name="label" translatable="yes">Album names to ignore (comma-separated list)</property>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
+            <property name="padding">10</property>
             <property name="position">0</property>
           </packing>
         </child>
@@ -85,7 +102,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="invisible_char">•</property>
-            <property name="text" translatable="yes">j</property>
+            <property name="text" translatable="yes">Unknown, Unknown Album, Single</property>
           </object>
           <packing>
             <property name="expand">False</property>

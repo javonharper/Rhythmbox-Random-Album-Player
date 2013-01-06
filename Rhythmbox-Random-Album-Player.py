@@ -24,8 +24,8 @@ from gi.repository import Peas
 from gi.repository import RB
 from gi.repository import Gtk
 
-#finding a file
-# rb_find_plugin_data_file("myfile")
+from RandomAlbumConfigDialog import ConfigDialog
+
 random_album_menu_item = '''
   <ui>
     <menubar name="MenuBar">
