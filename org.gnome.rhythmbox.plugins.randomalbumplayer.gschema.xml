@@ -1,5 +1,5 @@
 <schemalist>
-    <schema id="com.javonharper.rhythmbox.plugins.randomalbumplayer" path="/com/javonharper/rhythmbox/plugins/randomalbumplayer/">
+    <schema id="org.gnome.rhythmbox.plugins.randomalbumplayer" path="/org/gnome/rhythmbox/plugins/randomalbumplayer/">
     <key name="albums-to-play" type="n">
       <default>1</default>
       <summary>Albums To Play</summary>

@@ -56,7 +56,7 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     ui_manager.insert_action_group(action_group)
     self.ui_id = ui_manager.add_ui_from_string(random_album_menu_item)
     
-    self.settings = Gio.Settings('com.javonharper.rhythmbox.plugins.randomalbumplayer')
+    self.settings = Gio.Settings('org.gnome.rhythmbox.plugins.randomalbumplayer')
 
   def do_deactivate(self):
     print 'Deactivating Random Album Plugin'

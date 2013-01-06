@@ -11,8 +11,7 @@ class ConfigDialog(GObject.Object, PeasGtk.Configurable):
         self.ui = Gtk.Builder()
         self.ui.add_from_file(rb.find_plugin_file(self, DIALOG_UI_FILE))
         
-        # Load the settings from Gio
-        self.settings = Gio.Settings('com.javonharper.rhythmbox.plugins.randomalbumplayer')
+        self.settings = Gio.Settings('org.gnome.rhythmbox.plugins.randomalbumplayer')
         
         self.albums_to_play = self.ui.get_object('countSpinButton')
         self.albums_to_play.set_value(self.settings['albums-to-play'])
