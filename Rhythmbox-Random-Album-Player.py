@@ -116,15 +116,20 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
       album_struct["songs"].append(entry)
       albums[album_name] = album_struct
   
-    # Choose a random album
-    album_names = albums.keys()
-    num_albums = len(albums)
-    selected_album = album_names[random.randint(0, num_albums - 1)]
+    # Choose a random album with more than 5 songs
+    while True:
+        album_names = albums.keys()
+        num_albums = len(albums)
+        selected_album = album_names[random.randint(0, num_albums - 1)]
 
-    print 'Queuing ' + selected_album+ '.'
+        print 'Queuing ' + selected_album+ '.'
   
-    # Find all the songs from that album
-    songs = albums[selected_album]["songs"]
+        # Find all the songs from that album
+        songs = albums[selected_album]["songs"]
+    
+        if len(songs) > 5:
+            # album is long enough
+            break
   
     # Sort the songs by disc number, track number
     songs = sorted(songs, key=lambda song: song.get_ulong(RB.RhythmDBPropType.TRACK_NUMBER))
