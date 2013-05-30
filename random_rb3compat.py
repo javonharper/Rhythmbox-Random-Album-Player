@@ -432,7 +432,7 @@ class ActionGroup(object):
                 self.actiongroup.add_action(action)
 
             if accel:
-                app.add_accelerator(accel, action_type+"."+action_name)
+                app.add_accelerator(accel, action_type+"."+action_name, None)
         else:
             if state == ActionGroup.TOGGLE:
                 action = Gtk.ToggleAction(label=label,
