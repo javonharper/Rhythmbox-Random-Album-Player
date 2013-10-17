@@ -28,9 +28,9 @@ from gi.repository import Gio
 from RandomAlbumConfigDialog import ConfigDialog
 
 #~ GLib.threads_init()
-from suspend_rb3compat import ActionGroup
-from suspend_rb3compat import Action
-from suspend_rb3compat import ApplicationShell
+from random_rb3compat import ActionGroup
+from random_rb3compat import Action
+from random_rb3compat import ApplicationShell
 
 ui_str = '''
   <ui>
@@ -57,15 +57,16 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     #~ action = Gtk.Action ('RandomAlbum', _('Random Album'), _('Play a Random Album'), "")
     #~ action.connect ('activate', self.random_album, shell)
     #~ action_group = Gtk.ActionGroup('RandomAlbumActionGroup')
-    #~ action_group.add_action_with_accel (action, "<alt>R")
+    #~ action_group.add_action_with_accel (action, "<alt>Z")
     
     self.shell = self.object
         
     self.action_group = ActionGroup(self.shell, 'RandomAlbumActionGroup')
     
-    action = self.action_group.add_action(func=self.random_album,
+    action = self.action_group.add_action_with_accel(func=self.random_album,
     action_name='RandomAlbum', label='RandomAlbum',
-    action_type='app', action_state=ActionGroup.STANDARD)
+    action_type='app', action_state=ActionGroup.STANDARD,
+    accel="<alt>Z")
 
     self._appshell = ApplicationShell(self.shell)
     self._appshell.insert_action_group(self.action_group)
