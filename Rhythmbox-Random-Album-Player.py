@@ -27,7 +27,12 @@ from gi.repository import Gio
 
 from RandomAlbumConfigDialog import ConfigDialog
 
-random_album_menu_item = '''
+#~ GLib.threads_init()
+from suspend_rb3compat import ActionGroup
+from suspend_rb3compat import Action
+from suspend_rb3compat import ApplicationShell
+
+ui_str = '''
   <ui>
     <menubar name="MenuBar">
       <menu name="ControlMenu" action="Control">
@@ -37,6 +42,8 @@ random_album_menu_item = '''
   </ui>
 '''
 
+
+
 class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
   __gtype_name__ = 'RandomAlbumPlugin'
   object = GObject.property(type=GObject.Object)
@@ -45,28 +52,36 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     super(RandomAlbumPlugin, self).__init__()
 
   def do_activate(self):
-    shell = self.object
+    #~ shell = self.object
     print "Activating Random Album Plugin"
-    action = Gtk.Action ('RandomAlbum', _('Random Album'), _('Play a Random Album'), "")
-    action.connect ('activate', self.random_album, shell)
-    action_group = Gtk.ActionGroup('RandomAlbumActionGroup')
-    action_group.add_action_with_accel (action, "<alt>R")
+    #~ action = Gtk.Action ('RandomAlbum', _('Random Album'), _('Play a Random Album'), "")
+    #~ action.connect ('activate', self.random_album, shell)
+    #~ action_group = Gtk.ActionGroup('RandomAlbumActionGroup')
+    #~ action_group.add_action_with_accel (action, "<alt>R")
     
-    ui_manager = shell.props.ui_manager
-    ui_manager.insert_action_group(action_group)
-    self.ui_id = ui_manager.add_ui_from_string(random_album_menu_item)
+    self.shell = self.object
+        
+    self.action_group = ActionGroup(self.shell, 'RandomAlbumActionGroup')
+    
+    action = self.action_group.add_action(func=self.random_album,
+    action_name='RandomAlbum', label='RandomAlbum',
+    action_type='app', action_state=ActionGroup.STANDARD)
+
+    self._appshell = ApplicationShell(self.shell)
+    self._appshell.insert_action_group(self.action_group)
+    self._appshell.add_app_menuitems(ui_str, 'RandomAlbumActionGroup')
     
     self.settings = Gio.Settings('org.gnome.rhythmbox.plugins.randomalbumplayer')
 
   def do_deactivate(self):
     print 'Deactivating Random Album Plugin'
     shell = self.object
-    ui_manager = shell.props.ui_manager
-    ui_manager.remove_ui(self.ui_id)
+    #~ ui_manager = shell.props.ui_manager
+    #~ ui_manager.remove_ui(self.ui_id)
 
-  def random_album(self, event, shell):
+  def random_album(self, *args):
     # Get URIs of all the songs in the queue and remove them
-    play_queue = shell.props.queue_source
+    play_queue = self.shell.props.queue_source
     for row in play_queue.props.query_model:
       entry = row[0]
       play_queue.remove_entry(entry)
@@ -77,9 +92,9 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     
     # Start the music!(well, first stop it, but it'll start up again.)
     print 'Playing Album'
-    player = shell.props.shell_player
+    player = self.shell.props.shell_player
     player.stop()
-    player.set_playing_source(shell.props.queue_source)
+    player.set_playing_source(self.shell.props.queue_source)
     player.playpause(True)
 
   def queue_random_album(self):
@@ -101,15 +116,20 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
       album_struct["songs"].append(entry)
       albums[album_name] = album_struct
   
-    # Choose a random album
-    album_names = albums.keys()
-    num_albums = len(albums)
-    selected_album = album_names[random.randint(0, num_albums - 1)]
+    # Choose a random album with more than 5 songs
+    while True:
+        album_names = albums.keys()
+        num_albums = len(albums)
+        selected_album = album_names[random.randint(0, num_albums - 1)]
 
-    print 'Queuing ' + selected_album+ '.'
+        print 'Queuing ' + selected_album+ '.'
   
-    # Find all the songs from that album
-    songs = albums[selected_album]["songs"]
+        # Find all the songs from that album
+        songs = albums[selected_album]["songs"]
+    
+        if len(songs) > 5:
+            # album is long enough
+            break
   
     # Sort the songs by disc number, track number
     songs = sorted(songs, key=lambda song: song.get_ulong(RB.RhythmDBPropType.TRACK_NUMBER))
