@@ -2,6 +2,10 @@ Do you prefer listening to whole albums but aren't sure which one you're in the 
 ===
 **This plugin for Rhythmbox queues a random album and plays it immediately.**
 
+Dependencies
+===
+Make sure you install the package "python-lxml".
+
 Installing
 ===
 At the command line, run the command as root:
