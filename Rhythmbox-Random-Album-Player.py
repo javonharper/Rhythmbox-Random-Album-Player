@@ -52,13 +52,7 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     super(RandomAlbumPlugin, self).__init__()
 
   def do_activate(self):
-    #~ shell = self.object
     print "Activating Random Album Plugin"
-    #~ action = Gtk.Action ('RandomAlbum', _('Random Album'), _('Play a Random Album'), "")
-    #~ action.connect ('activate', self.random_album, shell)
-    #~ action_group = Gtk.ActionGroup('RandomAlbumActionGroup')
-    #~ action_group.add_action_with_accel (action, "<alt>Z")
-    
     self.shell = self.object
         
     self.action_group = ActionGroup(self.shell, 'RandomAlbumActionGroup')
@@ -77,8 +71,6 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
   def do_deactivate(self):
     print 'Deactivating Random Album Plugin'
     shell = self.object
-    #~ ui_manager = shell.props.ui_manager
-    #~ ui_manager.remove_ui(self.ui_id)
 
   def random_album(self, *args):
     # Get URIs of all the songs in the queue and remove them
