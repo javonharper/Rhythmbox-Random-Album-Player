@@ -74,6 +74,7 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     self.clear_queue()
     self.queue_random_albums(self.settings['albums-to-play'])
     self.play_album()
+    self.scroll_to_current_song()
 
   def clear_queue(self):
     play_queue = self.shell.props.queue_source
@@ -91,6 +92,12 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     player.stop()
     player.set_playing_source(self.shell.props.queue_source)
     player.playpause(True)
+
+  def scroll_to_current_song(self):
+    song = self.shell.props.shell_player.get_playing_entry()
+    src = self.shell.props.library_source
+    lst = src.get_entry_view()
+    lst.scroll_to_entry(song)
 
   def queue_random_album(self):
     shell = self.object
