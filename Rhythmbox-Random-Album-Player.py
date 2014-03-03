@@ -42,8 +42,6 @@ ui_str = '''
   </ui>
 '''
 
-
-
 class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
   __gtype_name__ = 'RandomAlbumPlugin'
   object = GObject.property(type=GObject.Object)
@@ -73,17 +71,21 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     shell = self.object
 
   def random_album(self, *args):
-    # Get URIs of all the songs in the queue and remove them
+    self.clear_queue()
+    self.queue_random_albums(self.settings['albums-to-play'])
+    self.play_album()
+
+  def clear_queue(self):
     play_queue = self.shell.props.queue_source
     for row in play_queue.props.query_model:
       entry = row[0]
       play_queue.remove_entry(entry)
-  
-    # Queue a random album
-    for _ in range(self.settings['albums-to-play']):
-        self.queue_random_album()
     
-    # Start the music!(well, first stop it, but it'll start up again.)
+  def queue_random_albums(self, album_count):
+    for _ in range(album_count):
+        self.queue_random_album()
+
+  def play_album(self):
     print 'Playing Album'
     player = self.shell.props.shell_player
     player.stop()
@@ -115,7 +117,7 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
         num_albums = len(albums)
         selected_album = album_names[random.randint(0, num_albums - 1)]
 
-        print 'Queuing ' + selected_album+ '.'
+        print 'Queuing ' + selected_album + '.'
   
         # Find all the songs from that album
         songs = albums[selected_album]["songs"]
