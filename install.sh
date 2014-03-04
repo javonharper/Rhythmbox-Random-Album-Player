@@ -53,7 +53,7 @@ SCRIPT_NAME=`basename "$0"`
 SCRIPT_PATH=${0%`basename "$0"`}
 PLUGIN_PATH="/home/${USER}/.local/share/rhythmbox/plugins/RhythmboxRandomAlbumPlayer/"
 GLIB_SCHEME="org.gnome.rhythmbox.plugins.randomalbumplayer.gschema.xml"
-SCHEMA_FOLDER="schema/"
+SCHEMA_FOLDER=""
 GLIB_DIR="/usr/share/glib-2.0/schemas/"
 
 #build the dirs
