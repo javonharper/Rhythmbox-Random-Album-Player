@@ -8,11 +8,17 @@ Make sure you install the package "python-lxml".
 
 Installing
 ===
-At the command line, run the command as root:
+At the command line for rhythmbox 2.96 to 2.99.1:
 
 ```
 $ ./install.sh
 ```
+At the command line for rhythmbox 3.0 and later:
+
+```
+$ ./install.sh --rb3
+```
+
 
 Usage
 ===
