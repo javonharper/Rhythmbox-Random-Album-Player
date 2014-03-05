@@ -42,5 +42,13 @@ A comma-separated list of albums that you want the plugin to ignore.
 Default: Unknown, Unknown Album, Single
 
 
+Contributors
+===
+- David Mohammed (fossfreedom)
+- Andrea Franco (afrancoto)
+- silberzwiebel
+- UMLAUTaxl
+ 
 Enjoy!
 ===
+
