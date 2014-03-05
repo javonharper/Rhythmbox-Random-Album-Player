@@ -64,7 +64,7 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     self.action_group = ActionGroup(self.shell, 'RandomAlbumActionGroup')
     
     action = self.action_group.add_action_with_accel(func=self.random_album,
-    action_name='RandomAlbum', label='Random Album',
+    action_name='RandomAlbum', label='Play Random Album',
     action_type='app', action_state=ActionGroup.STANDARD,
     accel="<shift><ctrl>R")
 
