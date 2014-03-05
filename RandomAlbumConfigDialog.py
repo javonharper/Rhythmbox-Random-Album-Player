@@ -9,7 +9,7 @@ class ConfigDialog(GObject.Object, PeasGtk.Configurable):
     
     def do_create_configure_widget(self):
         self.ui = Gtk.Builder()
-        self.ui.add_from_file(DIALOG_UI_FILE)
+        self.ui.add_from_file(rb.find_plugin_file(self,DIALOG_UI_FILE))
         
         self.settings = Gio.Settings('org.gnome.rhythmbox.plugins.randomalbumplayer')
         

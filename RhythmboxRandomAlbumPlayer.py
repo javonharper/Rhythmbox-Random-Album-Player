@@ -50,7 +50,7 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     super(RandomAlbumPlugin, self).__init__()
 
   def do_activate(self):
-    print "Activating Random Album Plugin"
+    print("Activating Random Album Plugin")
     self.shell = self.object
         
     self.action_group = ActionGroup(self.shell, 'RandomAlbumActionGroup')
@@ -67,7 +67,7 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     self.settings = Gio.Settings('org.gnome.rhythmbox.plugins.randomalbumplayer')
 
   def do_deactivate(self):
-    print 'Deactivating Random Album Plugin'
+    print('Deactivating Random Album Plugin')
     shell = self.object
 
   def random_album(self, *args):
@@ -87,7 +87,7 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
         self.queue_random_album()
 
   def play_album(self):
-    print 'Playing Album'
+    print('Playing Album')
     player = self.shell.props.shell_player
     player.stop()
     player.set_playing_source(self.shell.props.queue_source)
@@ -120,11 +120,11 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
   
     # Choose a random album with more than 5 songs
     while True:
-        album_names = albums.keys()
+        album_names = list(albums.keys())
         num_albums = len(albums)
         selected_album = album_names[random.randint(0, num_albums - 1)]
 
-        print 'Queuing ' + selected_album + '.'
+        print('Queuing ' + selected_album + '.')
   
         # Find all the songs from that album
         songs = albums[selected_album]["songs"]
