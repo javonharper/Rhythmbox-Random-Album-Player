@@ -9,6 +9,7 @@ $0 [OPTION]
 -h, --help      show this message.
 -2, --rb2     install the plugin for rhythmbox version 2.96 to 2.99 (default).
 -3, --rb3       install the plugin for rhythmbox 3
+-n, --no-sudo   work without sudo, but requires modifications to bashrc
 
 EOF
 )
@@ -16,7 +17,7 @@ EOF
 ########################### OPTIONS PARSING #################################
 
 #parse options
-TMP=`getopt --name=$0 -a --longoptions=rb2,rb3,help -o 2,3,h -- $@`
+TMP=`getopt --name=$0 -a --longoptions=rb2,rb3,no-sudo,help -o 2,3,n,h -- $@`
 
 if [[ $? == 1 ]]
 then
@@ -35,6 +36,9 @@ until [[ $1 == -- ]]; do
         -3|--rb3)
             RB=false
             ;;
+        -n|--no-sudo)
+            SUDO=false
+            ;;
         -h|--help)
             echo "$usage"
             exit
@@ -46,15 +50,23 @@ shift # remove the '--', now $1 positioned at first argument if any
 
 #default values
 RB=${RB:=true}
+SUDO=${SUDO:=true}
 
 ########################## START INSTALLATION ################################
 
 SCRIPT_NAME=`basename "$0"`
 SCRIPT_PATH=${0%`basename "$0"`}
-PLUGIN_PATH="/home/${USER}/.local/share/rhythmbox/plugins/RhythmboxRandomAlbumPlayer/"
+PLUGIN_PATH="${HOME}/.local/share/rhythmbox/plugins/RhythmboxRandomAlbumPlayer/"
 GLIB_SCHEME="org.gnome.rhythmbox.plugins.randomalbumplayer.gschema.xml"
 SCHEMA_FOLDER=""
-GLIB_DIR="/usr/share/glib-2.0/schemas/"
+if [[ $SUDO == true ]]
+then
+    GLIB_DIR="${HOME}/.local/share/glib-2.0/schemas/"
+fi
+if [[ $SUDO == false ]]
+then
+    GLIB_DIR="${HOME}/.local/share/glib-2.0/schemas/"
+fi
 
 #build the dirs
 mkdir -p $PLUGIN_PATH
@@ -72,6 +84,19 @@ fi
 rm "${PLUGIN_PATH}${SCRIPT_NAME}"
 
 #install the glib schema
-echo "Installing the glib schema (password needed)"
-sudo cp "${PLUGIN_PATH}${SCHEMA_FOLDER}${GLIB_SCHEME}" "$GLIB_DIR"
-sudo glib-compile-schemas "$GLIB_DIR"
+if [[ $SUDO == true ]]
+then
+    echo "Installing the glib schema (password needed)"
+    sudo cp "${PLUGIN_PATH}${SCHEMA_FOLDER}${GLIB_SCHEME}" "$GLIB_DIR"
+    sudo glib-compile-schemas "$GLIB_DIR"
+fi
+if [[ $SUDO == false ]]
+then
+    echo "Installing the glib schema"
+    mkdir -p $GLIB_DIR
+    cp "${PLUGIN_PATH}${SCHEMA_FOLDER}${GLIB_SCHEME}" "$GLIB_DIR"
+    glib-compile-schemas "$GLIB_DIR"
+
+    echo "Add this in your .bashrc if it is not already:"
+    echo "export XDG_DATA_DIRS=\$HOME/.local/share:\$XDG_DATA_DIRS"
+fi
