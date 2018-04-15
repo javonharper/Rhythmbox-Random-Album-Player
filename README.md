@@ -19,6 +19,12 @@ At the command line for rhythmbox 3.0 and later:
 $ ./install.sh --rb3
 ```
 
+If it gives errors on permissions, launch it with sudo:
+
+```
+$ sudo ./install.sh --rb3
+```
+
 
 Usage
 ===
@@ -48,7 +54,6 @@ Contributors
 - Andrea Franco (afrancoto)
 - silberzwiebel
 - UMLAUTaxl
- 
+
 Enjoy!
 ===
-
