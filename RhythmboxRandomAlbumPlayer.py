@@ -61,9 +61,9 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
   def do_activate(self):
     print("Activating Random Album Plugin")
     self.shell = self.object
-        
+
     self.action_group = ActionGroup(self.shell, 'RandomAlbumActionGroup')
-    
+
     action = self.action_group.add_action_with_accel(func=self.random_album,
     action_name='RandomAlbum', label='Random Album',
     action_type='app', action_state=ActionGroup.STANDARD,
@@ -77,7 +77,7 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
         #uim = self.shell.props.ui_manager
         self._appshell.add_app_menuitems(toolbar_button_ui, 'RandomAlbum')
         #uim.add_ui_from_string(toolbar_button_ui)
-    
+
     self.settings = Gio.Settings('org.gnome.rhythmbox.plugins.randomalbumplayer')
 
   def do_deactivate(self):
@@ -96,7 +96,7 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     for row in play_queue.props.query_model:
       entry = row[0]
       play_queue.remove_entry(entry)
-    
+
   def queue_random_albums(self, album_count):
     for _ in range(album_count):
         self.queue_random_album()
@@ -106,7 +106,7 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     player = self.shell.props.shell_player
     player.stop()
     player.set_playing_source(self.shell.props.queue_source)
-    player.playpause(True)
+    player.playpause()
 
   def scroll_to_current_song(self):
     song = self.shell.props.shell_player.get_playing_entry()
@@ -118,21 +118,21 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
     shell = self.object
     library = shell.props.library_source
     albums = {}
-    
+
     ignore_albums = [ item.strip() for item in self.settings['ignored-albums'].split(',') ]
 
     for row in library.props.query_model:
       entry = row[0]
       album_name = entry.get_string(RB.RhythmDBPropType.ALBUM)
-      
+
       if album_name in ignore_albums:
         continue
-        
+
       album_struct = albums.get(album_name, { "songs" : [], "count": 0 })
       album_struct["count"] = album_struct["count"] + 1
       album_struct["songs"].append(entry)
       albums[album_name] = album_struct
-  
+
     # Choose a random album with more than 5 songs
     while True:
         album_names = list(albums.keys())
@@ -140,18 +140,18 @@ class RandomAlbumPlugin(GObject.Object, Peas.Activatable):
         selected_album = album_names[random.randint(0, num_albums - 1)]
 
         print('Queuing ' + selected_album + '.')
-  
+
         # Find all the songs from that album
         songs = albums[selected_album]["songs"]
-    
+
         if len(songs) > 5:
             # album is long enough
             break
-  
+
     # Sort the songs by disc number, track number
     songs = sorted(songs, key=lambda song: song.get_ulong(RB.RhythmDBPropType.TRACK_NUMBER))
     songs = sorted(songs, key=lambda song: song.get_ulong(RB.RhythmDBPropType.DISC_NUMBER))
-        
-    # Add the songs to the play queue      
+
+    # Add the songs to the play queue
     for song in songs:
       shell.props.queue_source.add_entry(song, -1)
