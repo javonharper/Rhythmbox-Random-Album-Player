@@ -1,3 +1,7 @@
+[![Maintainers Wanted](https://img.shields.io/badge/maintainers-wanted-red.svg)](https://github.com/pickhardt/maintainers-wanted)
+
+
+
 Do you prefer listening to whole albums but aren't sure which one you're in the mood for?
 ===
 **This plugin for Rhythmbox queues a random album and plays it immediately.**
