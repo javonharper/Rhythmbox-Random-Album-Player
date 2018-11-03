@@ -54,6 +54,7 @@ Contributors
 - Andrea Franco (afrancoto)
 - silberzwiebel
 - UMLAUTaxl
+- andreabertagnolli
+- ProgVal
 
-Enjoy!
-===
+## Enjoy!
