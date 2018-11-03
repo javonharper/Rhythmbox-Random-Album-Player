@@ -23,8 +23,8 @@ $ ./install.sh --rb3
 Usage
 ===
 
-From the application menu, click 'Control' -> 'Random Album' to start up a random album.
-You can also use the shortcut key Alt+R to start.
+From the application menu, click 'Tools' -> 'Random Album' to start up a random album.
+You can also use the shortcut key Shift+Ctrl+R to start.
 
 Configuration options
 ===
