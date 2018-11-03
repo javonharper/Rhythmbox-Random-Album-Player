@@ -61,7 +61,7 @@ GLIB_SCHEME="org.gnome.rhythmbox.plugins.randomalbumplayer.gschema.xml"
 SCHEMA_FOLDER=""
 if [[ $SUDO == true ]]
 then
-    GLIB_DIR="${HOME}/.local/share/glib-2.0/schemas/"
+    GLIB_DIR="/usr/share/glib-2.0/schemas/"
 fi
 if [[ $SUDO == false ]]
 then
